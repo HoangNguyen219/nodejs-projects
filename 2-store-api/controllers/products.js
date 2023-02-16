@@ -24,6 +24,12 @@ const getAllProducts = async (req, res) => {
         const fieldsList = query.fields.split(',').join(' ');
         result = result.select(fieldsList);
     }
+    const page = Number(query.page) || 1;
+    const itemPerPage = 10;
+    const limit = Number(query.limit) || itemPerPage;
+    const skip = (page - 1) * itemPerPage;
+    result = result.skip(skip).limit(limit);
+
     const products = await result;
     console.log(query);
     res.status(200).json({ products, nbHits: products.length })
