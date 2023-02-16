@@ -12,7 +12,15 @@ const getAllProducts = async (req, res) => {
     if(query.name) {
         query.name = {$regex: query.name, $options: 'i'}
     }
-    const products = await Product.find(query)
+    let result = await Product.find(query);
+    if(query.sort) {
+        const sortList = query.sort.split(',').join(' ');
+        result = result.sort(sortList);
+    }
+    else {
+        result = result.sort('createAt');
+    }
+    const products = await result;
     console.log(query);
     res.status(200).json({ products, nbHits: products.length })
 }
