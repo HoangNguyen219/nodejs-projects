@@ -11,6 +11,7 @@ const fileupload = require('express-fileupload')
 
 // USE V2!!
 const cloudinary = require('cloudinary').v2;
+const fs = require('fs')
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
     api_key: process.env.CLOUD_API_KEY,
@@ -25,7 +26,7 @@ const errorHandlerMiddleware = require('./middlewares/error-handler');
 //middleware
 app.use(express.static('./public'))
 app.use(express.json());
-app.use(fileupload())
+app.use(fileupload({ useTempFiles: true }))
 
 //routes
 app.use('/api/v1/products', productRouter)
