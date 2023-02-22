@@ -6,6 +6,9 @@ require('express-async-errors');
 const express = require('express');
 const app = express();
 const connectDB = require('./db/connect');
+
+const productRouter = require('./routes/productRoutes');
+
 const notFoundMiddleware = require('./middlewares/not-found');
 const errorHandlerMiddleware = require('./middlewares/error-handler');
 
@@ -13,6 +16,7 @@ const errorHandlerMiddleware = require('./middlewares/error-handler');
 app.use(express.json());
 
 //routes
+app.use('/api/v1/products', productRouter)
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
