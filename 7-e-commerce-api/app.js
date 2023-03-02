@@ -11,6 +11,7 @@ const cors = require('cors')
 const connectDB = require('./db/connect')
 
 const authRouter = require('./routes/authRoutes')
+const userRouter = require('./routes/userRoutes')
 
 const notFoundMiddleware = require('./middlewares/not-found')
 const errorHandlerMiddleware = require('./middlewares/error-handler')
@@ -26,6 +27,7 @@ app.get('/api/v1', (req, res) => {
 })
 
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/users', userRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
