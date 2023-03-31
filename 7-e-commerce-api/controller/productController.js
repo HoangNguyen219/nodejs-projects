@@ -5,25 +5,47 @@ const CustomError = require('../errors')
 
 const createProduct = async (req, res) => {
     req.body.user = req.user.userId;
-    const product =  await Product.create(req.body);
-    res.status(StatusCodes.CREATED).json({product})
-    res.send('createProduct')
+    const product = await Product.create(req.body);
+    res.status(StatusCodes.CREATED).json({ product })
 }
 
 const getAllProducts = async (req, res) => {
-    res.send('getAllProducts')
+    const products = await Product.find({});
+    res.status(StatusCodes.OK).json({
+        products,
+        count: products.length
+    })
 }
 
 const getSingleProduct = async (req, res) => {
-    res.send('getSingleProduct')
+    const {id: productId} = req.params
+    const product = await Product.findById(productId)
+    if (!product) {
+        throw new CustomError.NotFoundError(`No product with id: ${productId}`)
+    }
+    res.status(StatusCodes.OK).json({product})
 }
 
 const updateProduct = async (req, res) => {
-    res.send('updateProduct')
+    const {id: productId} = req.params
+    const product = await Product.findByIdAndUpdate(productId, req.body, {
+        new: true,
+        runValidators: true,
+    })
+    if (!product) {
+        throw new CustomError.NotFoundError(`No product with id: ${productId}`)
+    }
+    res.status(StatusCodes.OK).json({product})
 }
 
 const deleteProduct = async (req, res) => {
-    res.send('deleteProduct')
+    const {id: productId} = req.params
+    const product = await Product.findById(productId)
+    if (!product) {
+        throw new CustomError.NotFoundError(`No product with id: ${productId}`)
+    }
+    await product.remove()
+    res.status(StatusCodes.OK).json({msg: 'Success! Product removed.'})
 }
 
 const uploadImage = async (req, res) => {
