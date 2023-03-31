@@ -1,12 +1,15 @@
 require('dotenv').config()
 require('express-async-errors')
 
+// express
 const express = require('express')
 const app = express()
 
+// rest of the packages
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const fileUpload = require('express-fileupload')
 
 const connectDB = require('./db/connect')
 
@@ -15,6 +18,7 @@ const authRouter = require('./routes/authRoutes')
 const userRouter = require('./routes/userRoutes')
 const productRouter = require('./routes/productRoutes')
 
+// middlewares
 const notFoundMiddleware = require('./middlewares/not-found')
 const errorHandlerMiddleware = require('./middlewares/error-handler')
 
@@ -23,6 +27,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser(process.env.JWT_SECRET))
 app.use(cors())
+
+app.use(express.static('./public'))
+app.use(fileUpload())
 
 app.get('/api/v1', (req, res) => {
     console.log(req.signedCookies);
