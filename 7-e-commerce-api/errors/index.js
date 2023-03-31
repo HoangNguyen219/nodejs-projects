@@ -10,5 +10,4 @@ module.exports = {
     UnauthenticatedError,
     NotFoundError,
     UnauthorizedError
-
 }

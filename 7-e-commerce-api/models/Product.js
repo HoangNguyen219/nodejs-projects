@@ -36,11 +36,8 @@ const ProductSchema = new mongoose.Schema({
     },
     colors: {
         type: [String],
+        default: ['#222'],
         required: true,
-    },
-    colors: {
-        type: Boolean,
-        default: false,
     },
     freeShipping: {
         type: Boolean,

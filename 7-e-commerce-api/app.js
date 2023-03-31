@@ -20,6 +20,7 @@ const errorHandlerMiddleware = require('./middlewares/error-handler')
 
 app.use(morgan('tiny'))
 app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.use(cookieParser(process.env.JWT_SECRET))
 app.use(cors())
 
