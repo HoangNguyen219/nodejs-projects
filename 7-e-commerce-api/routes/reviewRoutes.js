@@ -9,7 +9,9 @@ const
         updateReview,
         deleteReview } = require('../controller/reviewController')
 
-router.route('/').post(authenticateUser, createReview).get(getAllReviews)
+router.route('/')
+    .post(authenticateUser, createReview)
+    .get(getAllReviews)
 router
     .route('/:id')
     .get(getSingleReview)

@@ -17,7 +17,7 @@ const uploadProductImageLocal = async (req, res) => {
 
     const maxSize = 1024 * 1024;
     if (productImage.size > maxSize) {
-        throw new customError.BadRequestError('Please upload image smaller than 1Kb')
+        throw new customError.BadRequestError('Please upload image smaller than 1Mb')
     }
 
 
